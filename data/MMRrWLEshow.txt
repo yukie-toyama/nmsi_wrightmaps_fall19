@@ -1,0 +1,211 @@
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Wed Nov 13 13:59 2019
+SUMMARY OF THE ESTIMATION
+===========================================================Build: Jan 11 2019===
+
+Estimation method was: Bock-Aitkin Quadrature with 30 nodes and node range (-6.000,6.000)
+No node filtering not applicable
+Assumed population distribution was: Gaussian
+Constraint was: CASES
+The Data File: PretestData.txt
+The format:  id 1-4 site 5 form 6-7 responses 8-77
+No case weights
+The regression model:
+Grouping Variables:
+The item model: item+item*step
+Slopes are fixed
+Cases in file: 862  Cases in estimation: 805
+Final Deviance:                                    6233.96889
+Akaike Information Criterion (AIC):            6271.96889
+Akaike Information Criterion Corrected (AICc): 6271.13779
+Bayesian Information Criterion (BIC):          6361.0949
+Total number of estimated parameters: 19
+The number of iterations: 48
+Termination criteria:  Max iterations=1000, Parameter Change= 0.00500
+                       Deviance Change= 0.00010
+Iterations terminated because the convergence criteria were reached
+Random number generation seed:    1.00000
+Number of nodes used when drawing PVs: 2000
+Number of nodes used when computing fit: 200
+Number of plausible values to draw: 5
+Maximum number of iterations without a deviance improvement: 100
+Maximum number of Newton steps in M-step: 10
+Value for obtaining finite MLEs for zero/perfects:    0.30000
+
+key 1 scored as 0: 1100000001100000000000000000011100000010000000100110001000000111001000
+key 2 scored as 1: 2211111112211111111111111111122211111131121111211221113111111222122111
+key 3 scored as 2: X3222222233222222222222222222333222222422X3222323332X2X222222333233222
+key 4 scored as 3: XX33X3333XX333333333333333333XXX333333XXXXX333X3XXXXX3X333333XXX3XX333
+key 5 scored as 4: XXXXX44XXXXXXXXX4XXXXXX44XXXXXXXXXXXXXXXXXX44XXXXXXXXXXXXXX4XXXXXXX4XX
+================================================================================
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Wed Nov 13 13:59 2019
+TABLES OF RESPONSE MODEL PARAMETER ESTIMATES
+===========================================================Build: Jan 11 2019===
+TERM 1: item
+--------------------------------------------------------------------------------------------------------------
+TERM 1: item
+
+   VARIABLES                               UNWEIGHTED FIT             WEIGHTED FIT
+---------------                        -----------------------   -----------------------
+     item           ESTIMATE  ERROR^   MNSQ       CI        T    MNSQ       CI        T
+--------------------------------------------------------------------------------------------------------------
+ 1   Glow.01c_MC     -0.482   0.139    0.92 ( 0.82, 1.18) -0.9   0.93 ( 0.90, 1.10) -1.5
+ 5   Crude.02a_N..   -0.744   0.068    1.20 ( 0.86, 1.14)  2.8   1.05 ( 0.87, 1.13)  0.9
+ 12  Population...   -1.617   0.074    0.98 ( 0.86, 1.14) -0.3   0.98 ( 0.89, 1.11) -0.3
+ 23  Pest.02ab_O..   -1.940   0.083    1.10 ( 0.83, 1.17)  1.2   1.09 ( 0.86, 1.14)  1.2
+ 40  Pesticide.2..   -0.538   0.089    0.88 ( 0.83, 1.17) -1.4   0.90 ( 0.86, 1.14) -1.5
+ 41  Pesticide.2..    0.016   0.086    0.92 ( 0.83, 1.17) -0.9   0.93 ( 0.87, 1.13) -1.1
+ 42  Crude.03a_M..    1.886   0.176    1.14 ( 0.83, 1.17)  1.5   1.04 ( 0.77, 1.23)  0.3
+ 52  Garden.02.1..   -0.806   0.071    0.92 ( 0.86, 1.14) -1.1   0.98 ( 0.87, 1.13) -0.3
+ 67  Population...    0.329   0.087    1.00 ( 0.86, 1.14)  0.1   1.00 ( 0.88, 1.12)  0.0
+--------------------------------------------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+Separation Reliability =  0.992
+Chi-square test of parameter equality =    1452.57,  df = 9,  Sig Level = 0.000
+^ Quick standard errors have been used
+
+TERM 2: item*step
+----------------------------------------------------------------------------------------------------------------------------
+TERM 2: item*step
+
+          VARIABLES                                       UNWEIGHTED FIT             WEIGHTED FIT
+------------------------------                        -----------------------   -----------------------
+     item         category         ESTIMATE  ERROR^   MNSQ       CI        T    MNSQ       CI        T
+----------------------------------------------------------------------------------------------------------------------------
+ 5   Crude.02a_N..    0                               1.19 ( 0.86, 1.14)  2.6   1.05 ( 0.87, 1.13)  0.8
+ 5   Crude.02a_N..    1              1.582   0.200    1.05 ( 0.86, 1.14)  0.8   0.99 ( 0.67, 1.33)  0.0
+ 5   Crude.02a_N..    2             -1.582*           1.16 ( 0.86, 1.14)  2.2   1.04 ( 0.88, 1.12)  0.7
+ 12  Population...    0                               0.44 ( 0.86, 1.14)-10.2   1.00 ( 0.00, 2.36)  0.2
+ 12  Population...    1             -2.844   0.113    1.01 ( 0.86, 1.14)  0.1   1.01 ( 0.88, 1.12)  0.2
+ 12  Population...    2              0.753   0.102    0.99 ( 0.86, 1.14) -0.1   0.99 ( 0.97, 1.03) -0.5
+ 12  Population...    3              2.091*           0.95 ( 0.86, 1.14) -0.6   0.97 ( 0.91, 1.09) -0.7
+ 23  Pest.02ab_O..    0                               3.04 ( 0.83, 1.17) 15.8   0.92 ( 0.00, 2.82)  0.2
+ 23  Pest.02ab_O..    1             -2.739   0.135    1.14 ( 0.83, 1.17)  1.6   1.09 ( 0.84, 1.16)  1.1
+ 23  Pest.02ab_O..    2              1.653   0.148    1.01 ( 0.83, 1.17)  0.2   1.00 ( 0.84, 1.16)  0.1
+ 23  Pest.02ab_O..    3              1.087*           1.04 ( 0.83, 1.17)  0.5   1.04 ( 0.89, 1.11)  0.7
+ 40  Pesticide.2..    0                               0.79 ( 0.83, 1.17) -2.6   0.90 ( 0.83, 1.17) -1.2
+ 40  Pesticide.2..    1             -0.350   0.129    0.99 ( 0.83, 1.17) -0.1   1.00 ( 0.92, 1.08) -0.1
+ 40  Pesticide.2..    2              0.350*           0.94 ( 0.83, 1.17) -0.7   0.95 ( 0.90, 1.10) -1.0
+ 41  Pesticide.2..    0                               0.87 ( 0.83, 1.17) -1.5   0.91 ( 0.88, 1.12) -1.4
+ 41  Pesticide.2..    1             -0.168   0.134    0.98 ( 0.83, 1.17) -0.2   0.99 ( 0.90, 1.10) -0.2
+ 41  Pesticide.2..    2              0.168*           0.96 ( 0.83, 1.17) -0.5   0.98 ( 0.88, 1.12) -0.3
+ 52  Garden.02.1..    0                               0.92 ( 0.86, 1.14) -1.0   0.98 ( 0.87, 1.13) -0.3
+ 52  Garden.02.1..    1              4.153   0.709    0.91 ( 0.86, 1.14) -1.3   0.99 ( 0.00, 2.37)  0.2
+ 52  Garden.02.1..    2             -4.153*           0.92 ( 0.86, 1.14) -1.1   0.98 ( 0.87, 1.13) -0.3
+ 67  Population...    0                               0.99 ( 0.86, 1.14) -0.2   1.00 ( 0.89, 1.11)  0.0
+ 67  Population...    1             -1.232   0.104    1.01 ( 0.86, 1.14)  0.1   1.01 ( 0.96, 1.04)  0.3
+ 67  Population...    2              1.232*           1.03 ( 0.86, 1.14)  0.5   1.01 ( 0.82, 1.18)  0.1
+--------------------------------------------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+^ Quick standard errors have been used
+================================================================================
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Wed Nov 13 13:59 2019
+TABLES OF POPULATION MODEL PARAMETER ESTIMATES
+===========================================================Build: Jan 11 2019===
+REGRESSION COEFFICIENTS
+
+
+
+Regression Variable
+
+CONSTANT                   0.000*
+-----------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+===============================================
+CONDITIONAL COVARIANCE/CORRELATION MATRIX
+
+
+
+Dimension
+
+MMRr
+-------------------------------------------
+Variance                   0.604  ( 0.029)
+-------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+
+===========================================
+
+RELIABILITY COEFFICIENTS
+------------------------
+
+Dimension: (MMRr)
+-----------------------
+ MLE Person separation RELIABILITY:   0.254
+ WLE Person separation RELIABILITY:   0.146
+ EAP/PV RELIABILITY:                  0.428
+------------------------
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Wed Nov 13 13:59 2019
+MAP OF WLE ESTIMATES AND RESPONSE MODEL PARAMETER ESTIMATES
+===========================================================Build: Jan 11 2019===
+             Terms in the Model (excl Step terms)
+
+                               +item
+----------------------------------------------------
+       XXXXXXXXX|                                  |
+   3            |                                  |
+                |                                  |
+               X|                                  |
+                |                                  |
+             XXX|                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+               X|                                  |
+   2            |                                  |
+                |42                                |
+                |                                  |
+             XXX|                                  |
+           XXXXX|                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+        XXXXXXXX|                                  |
+               X|                                  |
+   1            |                                  |
+                |                                  |
+                |                                  |
+               X|                                  |
+           XXXXX|                                  |
+          XXXXXX|                                  |
+                |67                                |
+         XXXXXXX|                                  |
+           XXXXX|                                  |
+         XXXXXXX|41                                |
+   0         XXX|                                  |
+              XX|                                  |
+            XXXX|                                  |
+      XXXXXXXXXX|                                  |
+             XXX|1                                 |
+         XXXXXXX|40                                |
+              XX|                                  |
+         XXXXXXX|5 52                              |
+                |                                  |
+  -1         XXX|                                  |
+           XXXXX|                                  |
+                |                                  |
+            XXXX|                                  |
+               X|                                  |
+                |                                  |
+              XX|12                                |
+               X|                                  |
+              XX|                                  |
+               X|23                                |
+  -2            |                                  |
+               X|                                  |
+               X|                                  |
+                |                                  |
+               X|                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+  -3            |                                  |
+                |                                  |
+====================================================
+Each 'X' represents 7.1 cases
+
+====================================================

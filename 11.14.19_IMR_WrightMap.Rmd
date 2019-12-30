@@ -130,8 +130,15 @@ wrightMap(theta1, tt,
 
 ```{r plots2, echo=FALSE, results = FALSE, fig.keep = 'all', message = FALSE, warning = FALSE, fig.align = "center"}
 
+
+# set data_folder in your directry
+data_folder <- "/Users/yukietoyama/Dropbox/NMSI/0.GitHub/nmsi_wrightmaps_fall19/data"
+
+# set path and read csv file that includes response data = score
+read_path<-paste(data_folder, "NMSI-IMR.rdata", sep="/")
+
 # get calibration #2 results from standard setting data
-load("~/Dropbox/NMSI/0.GitHub/nmsi_wrightmaps_fall19/data/NMSI-IMR.rdata")
+load(read_path)
 
 deltas <- sets$deltas 
 
