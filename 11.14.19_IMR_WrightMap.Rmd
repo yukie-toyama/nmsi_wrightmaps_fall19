@@ -1,0 +1,233 @@
+---
+title: "IMR Pretest Fall 19 Calibration #1 & #2"
+date: "12/5/2019"
+output: html_document
+---
+
+On this page, you will find the following: 
+
+1. IMR (interpreting mathematical results) Construct Map,
+2. Items & Scoring Guides, 
+3. WrightMaps, 
+4. Thresfold Estimates, 
+5. A link to Item Analysis (from ConQuest), and
+6. A link to <a href="http://standardsmaps.com:3838/smap/" target = "_blank">StandardsMaps </a>software (for standards setting).
+
+### <a href="https://nmsi.bear-apps.com/constructs/public/fUft37Rtk3i21xShtnnOf6gJRM4CQR" target = "_blank">1. IMR Construct Map </a>
+
+* PDF of Construct Map, Items, and Scoring Guides is <a href="https://drive.google.com/open?id=10rKmoXhOzdaM8wFAab_11a6PFIP7HTBS" target = "_blank">here </a> 
+
+
+### 2. IMR Items & Scoring Guides on BASS
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/344/bundle/388/assignments/5342/score" target = "_blank">Airline.03a </a> (L3 is the most difficult; item stem needs to be changed to prompt desired responses)
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/259/item/5328/assignments/score" target = "_blank">Crude.06ab </a> (prompt should be improved to make students focus on decreasing trends)
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/264/bundle/360/assignments/5741/score" target = "_blank">Cycle.04ab </a> (Scroll down to the last 2 questions; L1 & L2  not much separation)
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/340/item/5769/assignments/5482/score" target = "_blank">Garden5abc </a> (Scroll down to the last 3 questions; initially 5a was too difficult as L1 and no L2 vs L3 distinction in 5bc)
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/294/activities/346/item/5607/score" target = "_blank">Hiring 3ab </a> (L1, L2, L3 no separation)
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/259/bundle/313/assignments/5219/score" target = "_blank">Pest.05ab </a> (scroll down to middle; L1 & L2  not much separation)
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/261/bundle/356/assignments/5119/score" target = "_blank">Population.07a </a> (scroll down to the bottom)
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/340/bundle/385/assignments/5482/score" target = "_blank">Powder.06a </a> (scroll down to the bottom)
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/261/item/5349/assignments/score" target = "_blank">Wildlife.02_OE </a> (L1 too easy; only 2 people scored into 0)
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/259/bundle/354/assignments/5219/score" target = "_blank">Word.03_MC </a> (L1 too easy; only 2 people scored into 0)
+
+
+
+```{r setup, include=FALSE}
+require(WrightMap)
+require(tidyverse)
+require(readxl)
+library(RColorBrewer)
+library(knitr)
+require(kableExtra)
+
+knitr::opts_chunk$set(echo = TRUE)
+
+# read CQ result files
+model1 <- CQmodel(p.est = "data/IMRWLEcases.txt", show = "data/IMR.WLE.shw.txt")
+
+# setting theta for WrightMap1 (x-axis = items) and WrightMap2 (x-axis = thresholds)
+theta1 <- model1$p.est$`est (d1)`
+
+# make thresholds dataframe (thres1) and order by item name 
+thres1 <- make.thresholds(model1) %>% 
+  as.data.frame() %>% 
+  rownames_to_column(., "item") %>%
+  arrange(item)
+
+View(thres1)
+
+# give descriptive col names for thres1
+colnames(thres1) <- c("item", "L1", "L2 ", "L3", "L4")
+
+# get rid of item col for WrightMap 1
+thres1a <- thres1 %>% select(-item)
+
+# set item names for WrightMap1 (x-axis = items)
+itemnames <- thres1$item
+
+#transposing thres1 to tt for WrightMap 2 with thresfolds on x-axis (rather than items)  
+tt <- thres1 %>%
+  select(-item) %>% 
+  rownames_to_column %>% 
+  gather(var, value, -rowname) %>% 
+  spread(rowname, value) 
+
+# manually match col names; careful as col num 1, 10, 11, and then 2, 3, ...
+colnames(tt) <- c("", "air3a", "wild2", "word3", "cru6ab", "cyc4ab", "gar5a", "gar5bc", "hir3ab", "pes5ab", "pop7a",  "pow6ab")
+
+row.names(tt) <- NULL
+View(tt)
+dim(tt) # 4 rows, 12 cols
+
+# subset tt (dropping the first column)
+tt <- tt[(1:4), (2:12)]
+
+# set itemnames2 for x-axis label for WrightMap2
+itemnames2 <- c("L0 vs.L1", "L1 vs.L2", "L2 vs.L3", "L3 vs.L4")
+
+# set colors
+thresholds.colors <- data.frame(
+  l1 = rep( "#D7191C", 11),
+  l2 = rep( "#FDAE61",11),
+  l3 = rep( "#ABDDA4",11),
+  l4 = rep( "#2B83BA",11))
+
+itemcolors <- c("#D7191C", "#FDAE61", "#ABDDA4", "#2B83BA")
+
+```
+
+### 3a. Initial WrightMaps (from Calibration 1)
+
+```{r plots, echo=FALSE, results = FALSE, fig.keep = 'all', message = FALSE, warning = FALSE, fig.align = "center"}
+
+#WrightMap1 with items on x-axis
+wrightMap(theta1, thres1a, 
+          label.items = itemnames,
+          main.title   = "Wright Map: IMR (by item)",
+          label.items.srt = 90,
+          axis.items = "",
+          thr.sym.col.bg = thresholds.colors)
+
+# mean(model1$p.est$`est (d1)`)
+# sd(model1$p.est$`est (d1)`)
+
+# WrightMap 2 with thresfolds on x-axis
+wrightMap(theta1, tt,
+          label.items = itemnames2,
+          main.title   = "Wright Map: IMR (by thresholds)",
+          thr.sym.col.fg = itemcolors,
+          thr.sym.col.bg = itemcolors,
+          axis.items = "threshold")
+
+```
+
+### 3b. WrightMap after Item Investigations (from Calibration 2)
+
+* Reduced overlap between L1 and L2 by making Garden 5a's thresfold to be L3 (initially it was misplaced at L1)
+* Reduced overlap between L2 and L3 by getting rid of partial credits in Garden 5bc & Hiring3ab
+* Cycle4ab has some issues with scoring guides (no separation between L1 and L2).A similar issue may exist with Pest5ab.
+* The first threshold for Wild2 and Word3 (both very low) should probably be ignored as they are based on only two people scoring into 0. 
+
+```{r plots2, echo=FALSE, results = FALSE, fig.keep = 'all', message = FALSE, warning = FALSE, fig.align = "center"}
+
+# get calibration #2 results from standard setting data
+load("~/Dropbox/NMSI/0.GitHub/nmsi_wrightmaps_fall19/data/NMSI-IMR.rdata")
+
+deltas <- sets$deltas 
+
+thres2 <- make.thresholds(deltas) %>% 
+  as.data.frame()
+
+# hand correcting level placement
+
+## hiring
+thres2[11, 3] <- thres2[11, 1]
+thres2[11, 1] <- NA
+
+## garden3bc
+thres2[8, 3] <- thres2[8, 1]
+thres2[8, 1] <- NA
+
+## garden 3a
+thres2[7, 3] <- thres2[7, 1]
+thres2[7, 1] <- NA
+
+## make rowname as name var
+thres2 <- tibble::rownames_to_column(thres2, "item")
+colnames(thres2) <- c("name", "L1", "L2 ", "L3", "L4")
+
+#transposing to have thresfolds on x-axis (rather than items) 
+tt2 <- thres2 %>%
+  select(-name) %>% 
+  rownames_to_column %>% 
+  gather(var, value, -rowname) %>% 
+  spread(rowname, value) 
+
+colnames(tt2) <- c("", "cru6ab", "air3a", "hir3ab", "word3", "cyc4ab", "pes5ab", "wild2", 
+                   "pop7a", "gar5a", "gar5bc",  "pow6ab")
+
+row.names(tt2) <- NULL
+tt2 <- tt2[(1:4), (2:12)]
+
+thres2 <- thres2 %>%
+    arrange(name)
+
+theta2 <- sets$thetas$d1
+
+# WrightMap1 with items on x-axis
+wrightMap(theta2, thres2[, 2:5], 
+          label.items = itemnames,
+          main.title   = "Revised Wright Map: IMR (by item)",
+          label.items.srt = 90,
+          axis.items = "",
+          thr.sym.col.bg = thresholds.colors)
+
+# WrightMap2 with thresfolds on x-axis
+wrightMap(theta2, tt2,
+          label.items = itemnames2,
+          main.title   = "Revised Wright Map: IMR (by thresholds)",
+          thr.sym.col.fg = itemcolors,
+          thr.sym.col.bg = itemcolors,
+          axis.items = "threshold")
+
+```
+
+#####   Calibration stats from calibration run #2
+
+*  808 cases
+*  11 scorable "units"
+*  WLE Separation Reliability: 0.192 (run#1: 0.167)
+*  EAP/PV Reliability: 0.355 (run#1: 0.378)
+*  Weighted MNSQ: 0.91 - 1.07 (run#1: 1.90-1.14)
+
+
+### 4. Threshold difficulty estimates (from Calibration 2)
+
+```{r tables, echo=FALSE, message = FALSE, warning = FALSE}
+
+knitr::kable(thres2, format = "html", digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = TRUE, font_size = 12)
+
+```
+
+
+### 5. Item Analysis (from Calibration 2)
+
+* <a href="https://drive.google.com/open?id=1yjXX3IIb4Mwysgn6B1t_pq4nOL1b_u7K" target = "_blank">Link to Item Analysis </a> (ConQuest output from Run #2 after revisions)
+
+
+### 6. StandardsMaps Software
+
+
+*  <a href="http://standardsmaps.com:3838/smap/" target = "_blank">Link to StandardsMaps </a> software (for standards setting)
+
+*  You need to download <a href="https://drive.google.com/file/d/1CQwvoDIQNjjj1IFt02M_25nxkxVZjumM/view?usp=sharing" target = "_blank">NMSI-IMR.rdata </a> to your machine and upload it to StandardsMaps.
+
+*   <a href="https://drive.google.com/open?id=1apjNDvdnZY5Y-dAP0W1db4d8BAcUBfJU" target = "_blank">Instruction </a> for setting up StandardsMaps on your machine.
+
+
+
+
+
+

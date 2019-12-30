@@ -1,0 +1,141 @@
+---
+title: "PRA Pretest Fall 19 Calibration #1 Results"
+date: "12/29/2019"
+output: html_document
+---
+
+On this page, you will find the following: 
+
+1. PRA (interpreting mathematical results) Construct Map,
+2. Items & Scoring Guides, 
+3. WrightMaps, 
+4. Thresfold Estimates, 
+5. A link to Item Analysis (from ConQuest), and
+
+
+### <a href="https://nmsi.bear-apps.com/constructs/public/w48UWWjseeXIVh433HTf5F9aXEjxML" target = "_blank">1. PRA Construct Map </a>
+
+
+### 2. PRA Items & Scoring Guides on BASS
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/316/activities/261/bundle/339/assignments/6321/score" target = "_blank">Brake.1a_MC & 2a_MC </a> 
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/340/item/5628/assignments/score" target = "_blank">Brake.2c_MC </a> 
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/316/activities/263/bundle/340/assignments/6385/score" target = "_blank">Brake.4a_NU & 4b_MC </a> 
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/340/item/5633/assignments/5482/score" target = "_blank">Brake.4b_OE </a> 
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/344/bundle/234/assignments/5342/score" target = "_blank">Water.1_MCOE </a>
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/294/activities/340/item/5616/assignments/score" target = "_blank">Word.1_MC </a>
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/260/bundle/354/assignments/5802/score" target = "_blank">Word.4a_OE & 4b_OE </a>
+
+
+```{r setup, include=FALSE}
+require(WrightMap)
+require(tidyverse)
+require(readxl)
+library(RColorBrewer)
+library(knitr)
+require(kableExtra)
+
+knitr::opts_chunk$set(echo = TRUE)
+
+model1 <- CQmodel(p.est = "data/PRAWLEcases.txt", show = "data/PRAWLEshow.txt")
+
+# setting theta for WrightMap1 (x-axis = items) and WrightMap2 (x-axis = thresholds)
+theta1 <- model1$p.est$`est (d1)`
+
+# make thresholds dataframe (thres1) and order by item name 
+thres1 <- make.thresholds(model1) %>% 
+  as.data.frame() %>% 
+  rownames_to_column(., "item") %>%
+  arrange(item)
+
+View(thres1)
+
+# give descriptive col names for thres1
+colnames(thres1) <- c("item", "L2 ", "L3")
+
+# get rid of item col for WrightMap 1
+thres1a <- thres1 %>% select(-item)
+
+#transposing thres1 to tt for WrightMap 2 with thresfolds on x-axis (rather than items) 
+tt <- thres1 %>%
+  select(-item) %>% 
+  rownames_to_column %>% 
+  gather(var, value, -rowname) %>% 
+  spread(rowname, value) 
+
+# give descriptive col names = short item names
+colnames(tt) <- c("", "brak1aM", "word.4bO", "brak2aM", "brak2cM", "brak4aN", "brak4bM", 
+                  "brak4bO", "water1M", "word1M", "word4aO")
+row.names(tt) <- NULL
+View(tt)
+
+# subset tt (dropping the first column)
+tt <- tt[(1:2), (2:11)]
+
+# itemnames2 will be used for WrightMap 2
+itemnames2 <- c("0-1 vs.L2", "L0-2 vs.L3")
+
+# set item names and thresholds colors for WrightMap1 (x-axis = items)
+itemnames <- thres1$item
+
+thresholds.colors <- data.frame(
+  l2 = rep( "#FDAE61",nrow(thres1)),
+  l3 = rep( "#ABDDA4",nrow(thres1)))
+
+# set item colors for WrightMap2 (x-axis = thresholds)
+itemcolors <- c("#FDAE61", "#ABDDA4") #selecting only L2 and L3 clors
+# itemcolors <- c("#D7191C", "#FDAE61", "#ABDDA4", "#2B83BA") here are all four colors for 4 levels
+
+```
+
+### 3. WrightMaps
+
+```{r plots, echo=FALSE, results = FALSE, fig.keep = 'all', message = FALSE, warning = FALSE, fig.align = "center"}
+
+#WrightMap1 with items on x-axis
+wrightMap(theta1, thres1a, 
+          label.items = itemnames,
+          main.title   = "Wright Map: PRA (by item)",
+          label.items.srt = 90,
+          axis.items = "",
+          dim.names = "",
+          thr.sym.col.bg = thresholds.colors)
+
+# mean(model1$p.est$`est (d1)`)
+# sd(model1$p.est$`est (d1)`)
+
+
+# WrightMap2 with thresfolds on x-axis
+wrightMap(theta1, tt,
+          label.items = itemnames2,
+          main.title   = "Wright Map: PRA (by thresholds)",
+          dim.names = "",
+          thr.sym.col.fg = itemcolors,
+          thr.sym.col.bg = itemcolors,
+          axis.items = "threshold")
+
+```
+
+
+#####   Calibration stats from calibration
+
+*  815 cases
+*  10 scorable "units"
+*  WLE Separation Reliability: 0.192
+*  EAP/PV Reliability: 0.47
+*  Weighted MNSQ: 0.86 - 1.13
+
+
+### 4. Threshold difficulty estimates
+
+```{r tables, echo=FALSE, message = FALSE, warning = FALSE}
+
+knitr::kable(thres1, format = "html", digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = TRUE, font_size = 12)
+
+```
+
+
+### 5. Item Analysis
+
+* <a href="https://drive.google.com/open?id=1WWhkq18o3RfS-yZc1fe7fPV4rT0p1rUr" target = "_blank">Link to Item Analysis </a> (ConQuest output)

@@ -1,0 +1,219 @@
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Wed Nov 13 13:59 2019
+SUMMARY OF THE ESTIMATION
+===========================================================Build: Jan 11 2019===
+
+Estimation method was: Bock-Aitkin Quadrature with 30 nodes and node range (-6.000,6.000)
+No node filtering not applicable
+Assumed population distribution was: Gaussian
+Constraint was: CASES
+The Data File: PretestData.txt
+The format:  id 1-4 site 5 form 6-7 responses 8-77
+No case weights
+The regression model:
+Grouping Variables:
+The item model: item+item*step
+Slopes are fixed
+Cases in file: 862  Cases in estimation: 815
+Final Deviance:                                    6838.07210
+Akaike Information Criterion (AIC):            6880.0721
+Akaike Information Criterion Corrected (AICc): 6879.06611
+Bayesian Information Criterion (BIC):          6978.83905
+Total number of estimated parameters: 21
+The number of iterations: 8
+Termination criteria:  Max iterations=1000, Parameter Change= 0.00500
+                       Deviance Change= 0.00010
+Iterations terminated because the convergence criteria were reached
+Random number generation seed:    1.00000
+Number of nodes used when drawing PVs: 2000
+Number of nodes used when computing fit: 200
+Number of plausible values to draw: 5
+Maximum number of iterations without a deviance improvement: 100
+Maximum number of Newton steps in M-step: 10
+Value for obtaining finite MLEs for zero/perfects:    0.30000
+
+key 1 scored as 0: 1100000001100000000000000000011100000010000000100110001000000111001000
+key 2 scored as 1: 2211111112211111111111111111122211111131121111211221113111111222122111
+key 3 scored as 2: X3222222233222222222222222222333222222422X3222323332X2X222222333233222
+key 4 scored as 3: XX33X3333XX333333333333333333XXX333333XXXXX333X3XXXXX3X333333XXX3XX333
+key 5 scored as 4: XXXXX44XXXXXXXXX4XXXXXX44XXXXXXXXXXXXXXXXXX44XXXXXXXXXXXXXX4XXXXXXX4XX
+================================================================================
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Wed Nov 13 13:59 2019
+TABLES OF RESPONSE MODEL PARAMETER ESTIMATES
+===========================================================Build: Jan 11 2019===
+TERM 1: item
+--------------------------------------------------------------------------------------------------------------
+TERM 1: item
+
+   VARIABLES                               UNWEIGHTED FIT             WEIGHTED FIT
+---------------                        -----------------------   -----------------------
+     item           ESTIMATE  ERROR^   MNSQ       CI        T    MNSQ       CI        T
+--------------------------------------------------------------------------------------------------------------
+ 10  Word.04a_OE      0.635   0.072    0.98 ( 0.86, 1.14) -0.2   0.99 ( 0.88, 1.12) -0.2
+ 11  Word.04b_OE      1.150   0.079    0.97 ( 0.86, 1.14) -0.4   0.98 ( 0.85, 1.15) -0.2
+ 30  Water.01_MC..   -0.052   0.112    0.96 ( 0.83, 1.17) -0.4   0.96 ( 0.84, 1.16) -0.5
+ 31  Brake.01a_M..   -1.547   0.114    1.13 ( 0.83, 1.17)  1.5   1.09 ( 0.83, 1.17)  1.0
+ 32  Brake.02a_M..   -0.460   0.093    1.13 ( 0.83, 1.17)  1.5   1.10 ( 0.86, 1.14)  1.4
+ 50  Brake.04a_N..    1.513   0.080    0.86 ( 0.88, 1.12) -2.3   0.94 ( 0.85, 1.15) -0.8
+ 51  Brake.04b_M..    0.573   0.128    1.07 ( 0.76, 1.24)  0.6   1.04 ( 0.81, 1.19)  0.5
+ 62  Word.01_MC      -0.263   0.067    1.05 ( 0.86, 1.14)  0.7   1.02 ( 0.89, 1.11)  0.3
+ 63  Brake.02c_M..    0.806   0.137    1.45 ( 0.75, 1.25)  3.1   1.26 ( 0.76, 1.24)  2.0
+ 64  Brake.04b_O..    1.342   0.088    0.71 ( 0.86, 1.14) -4.5   0.83 ( 0.83, 1.17) -2.0
+--------------------------------------------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+Separation Reliability =  0.989
+Chi-square test of parameter equality =    1161.08,  df = 10,  Sig Level = 0.000
+^ Quick standard errors have been used
+
+TERM 2: item*step
+----------------------------------------------------------------------------------------------------------------------------
+TERM 2: item*step
+
+          VARIABLES                                       UNWEIGHTED FIT             WEIGHTED FIT
+------------------------------                        -----------------------   -----------------------
+     item         category         ESTIMATE  ERROR^   MNSQ       CI        T    MNSQ       CI        T
+----------------------------------------------------------------------------------------------------------------------------
+ 10  Word.04a_OE      0                               1.02 ( 0.86, 1.14)  0.2   1.01 ( 0.91, 1.09)  0.2
+ 10  Word.04a_OE      1              0.035   0.115    1.04 ( 0.86, 1.14)  0.5   1.01 ( 0.89, 1.11)  0.3
+ 10  Word.04a_OE      2             -0.035*           0.90 ( 0.86, 1.14) -1.5   0.97 ( 0.86, 1.14) -0.4
+ 11  Word.04b_OE      0                               1.04 ( 0.86, 1.14)  0.5   1.03 ( 0.88, 1.12)  0.5
+ 11  Word.04b_OE      1              0.410   0.138    1.06 ( 0.86, 1.14)  0.9   1.02 ( 0.82, 1.18)  0.3
+ 11  Word.04b_OE      2             -0.410*           0.83 ( 0.86, 1.14) -2.6   0.94 ( 0.81, 1.19) -0.6
+ 30  Water.01_MC..    0                               0.97 ( 0.83, 1.17) -0.4   1.00 ( 0.81, 1.19)  0.1
+ 30  Water.01_MC..    1             -1.554   0.129    0.98 ( 0.83, 1.17) -0.2   0.98 ( 0.92, 1.08) -0.4
+ 30  Water.01_MC..    2              1.554*           0.86 ( 0.83, 1.17) -1.6   0.94 ( 0.82, 1.18) -0.6
+ 31  Brake.01a_M..    0                               1.43 ( 0.83, 1.17)  4.4   1.05 ( 0.55, 1.45)  0.3
+ 31  Brake.01a_M..    1             -0.950   0.135    1.08 ( 0.83, 1.17)  0.9   1.04 ( 0.91, 1.09)  1.0
+ 31  Brake.01a_M..    2              0.950*           1.11 ( 0.83, 1.17)  1.3   1.07 ( 0.90, 1.10)  1.5
+ 32  Brake.02a_M..    0                               1.33 ( 0.83, 1.17)  3.5   1.06 ( 0.83, 1.17)  0.7
+ 32  Brake.02a_M..    1             -0.596   0.127    1.02 ( 0.83, 1.17)  0.2   1.01 ( 0.94, 1.06)  0.5
+ 32  Brake.02a_M..    2              0.596*           1.08 ( 0.83, 1.17)  1.0   1.08 ( 0.89, 1.11)  1.4
+ 50  Brake.04a_N..    0                               0.88 ( 0.88, 1.12) -2.0   0.93 ( 0.89, 1.11) -1.2
+ 50  Brake.04a_N..    1              0.008   0.117    0.91 ( 0.88, 1.12) -1.5   0.97 ( 0.86, 1.14) -0.4
+ 50  Brake.04a_N..    2             -0.008*           0.83 ( 0.88, 1.12) -3.0   0.98 ( 0.76, 1.24) -0.1
+ 51  Brake.04b_M..    0                               1.04 ( 0.76, 1.24)  0.4   1.03 ( 0.86, 1.14)  0.4
+ 51  Brake.04b_M..    1             -0.470   0.181    1.00 ( 0.76, 1.24)  0.1   1.00 ( 0.90, 1.10)  0.1
+ 51  Brake.04b_M..    2              0.470*           1.19 ( 0.76, 1.24)  1.5   1.03 ( 0.75, 1.25)  0.3
+ 62  Word.01_MC       0                               1.10 ( 0.86, 1.14)  1.3   1.03 ( 0.89, 1.11)  0.5
+ 62  Word.01_MC       1              0.603   0.135    1.00 ( 0.86, 1.14)  0.0   1.00 ( 0.83, 1.17)  0.1
+ 62  Word.01_MC       2             -0.603*           1.01 ( 0.86, 1.14)  0.2   1.01 ( 0.90, 1.10)  0.1
+ 63  Brake.02c_M..    0                               1.36 ( 0.75, 1.25)  2.6   1.25 ( 0.83, 1.17)  2.7
+ 63  Brake.02c_M..    1              0.015   0.216    1.16 ( 0.75, 1.25)  1.2   1.06 ( 0.79, 1.21)  0.5
+ 63  Brake.02c_M..    2             -0.015*           1.62 ( 0.75, 1.25)  4.1   1.13 ( 0.69, 1.31)  0.8
+ 64  Brake.04b_O..    0                               0.80 ( 0.86, 1.14) -2.9   0.87 ( 0.86, 1.14) -1.9
+ 64  Brake.04b_O..    1              0.420   0.149    0.90 ( 0.86, 1.14) -1.4   0.97 ( 0.80, 1.20) -0.2
+ 64  Brake.04b_O..    2             -0.420*           0.56 ( 0.86, 1.14) -7.3   0.86 ( 0.77, 1.23) -1.2
+--------------------------------------------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+^ Quick standard errors have been used
+================================================================================
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Wed Nov 13 13:59 2019
+TABLES OF POPULATION MODEL PARAMETER ESTIMATES
+===========================================================Build: Jan 11 2019===
+REGRESSION COEFFICIENTS
+
+
+
+Regression Variable
+
+CONSTANT                   0.000*
+-----------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+===============================================
+CONDITIONAL COVARIANCE/CORRELATION MATRIX
+
+
+
+Dimension
+
+PRA
+-------------------------------------------
+Variance                   0.676  ( 0.033)
+-------------------------------------------
+An asterisk next to a parameter estimate indicates that it is constrained
+
+===========================================
+
+RELIABILITY COEFFICIENTS
+------------------------
+
+Dimension: (PRA)
+-----------------------
+ MLE Person separation RELIABILITY:   0.338
+ WLE Person separation RELIABILITY:   0.272
+ EAP/PV RELIABILITY:                  0.472
+------------------------
+================================================================================
+ConQuest: Generalised Item Response Modelling Software     Wed Nov 13 13:59 2019
+MAP OF WLE ESTIMATES AND RESPONSE MODEL PARAMETER ESTIMATES
+===========================================================Build: Jan 11 2019===
+             Terms in the Model (excl Step terms)
+
+                               +item
+----------------------------------------------------
+           XXXXX|                                  |
+                |                                  |
+   3            |                                  |
+               X|                                  |
+               X|                                  |
+                |                                  |
+                |                                  |
+               X|                                  |
+                |                                  |
+               X|                                  |
+                |                                  |
+   2            |                                  |
+                |                                  |
+               X|                                  |
+              XX|                                  |
+                |                                  |
+                |50                                |
+               X|64                                |
+              XX|                                  |
+               X|11                                |
+   1          XX|                                  |
+              XX|                                  |
+             XXX|63                                |
+              XX|                                  |
+           XXXXX|10 51                             |
+               X|                                  |
+                |                                  |
+      XXXXXXXXXX|                                  |
+           XXXXX|                                  |
+   0         XXX|                                  |
+                |30                                |
+                |                                  |
+           XXXXX|62                                |
+         XXXXXXX|                                  |
+               X|32                                |
+           XXXXX|                                  |
+                |                                  |
+             XXX|                                  |
+                |                                  |
+  -1      XXXXXX|                                  |
+                |                                  |
+                |                                  |
+              XX|                                  |
+                |                                  |
+                |31                                |
+               X|                                  |
+                |                                  |
+                |                                  |
+  -2           X|                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+                |                                  |
+               X|                                  |
+               X|                                  |
+                |                                  |
+                |                                  |
+  -3            |                                  |
+                |                                  |
+                |                                  |
+====================================================
+Each 'X' represents 10.3 cases
+
+====================================================
