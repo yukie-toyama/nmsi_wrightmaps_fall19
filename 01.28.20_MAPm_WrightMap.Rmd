@@ -1,0 +1,157 @@
+---
+title: "MAPm Pretest Fall 19 Calibration V2"
+date: "1/28/2020"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+### 1. MAPm Consruct Map
+<a href="https://nmsi.bear-apps.com/constructs/public/mBIW9MLhlSuMMGzpYb9keiDD5wqvvK" target = "_blank">Link </a> to construct map
+
+
+### 2. Items & Scoring Guides
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/263/bundle/360/assignments/5746/score" target = "_blank">Cycle.03a </a> (scroll down)
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/316/activities/261/item/5320/assignments/score" target = "_blank">Glow.1a </a>
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/259/bundle/355/assignments/5219/score" target = "_blank">Glow.2a-2c </a>
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/340/item/5536/assignments/5482/score" target = "_blank">Powder.5b.MC </a>
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/340/item/5696/assignments/score" target = "_blank">Straw.4a </a> 
+* <a href="https://nmsi.bear-apps.com/scheduled_activities/308/activities/264/item/4944/assignments/score" target = "_blank">Tshirt.7a </a>
+
+
+```{r setup, include=FALSE}
+require(WrightMap)
+require(tidyverse)
+require(RColorBrewer)
+require(knitr)
+require(kableExtra)
+
+knitr::opts_chunk$set(echo = TRUE)
+
+# read CQ result files
+model1 <- CQmodel(p.est = "data1/MAPmWLEcases.txt", show = "data1/MAPmWLEshowV2.txt")
+
+# setting theta for WrightMap1 (x-axis = items) and WrightMap2 (x-axis = thresholds)
+theta1 <- model1$p.est$`est (d1)`
+
+# make thresholds dataframe (thres1) and order by item name 
+thres1 <- make.thresholds(model1) %>% 
+  as.data.frame() %>% 
+  rownames_to_column(., "item") %>%
+  arrange(item) %>% 
+  mutate(V4 = NA)
+
+View(thres1)
+
+# manually correcting threshold placement for items with skipped lvl
+
+## Glow.01a (L1, L3, L4)
+thres1[2, 4] <- thres1[2, 2]
+thres1[2, 5] <- thres1[2, 3]
+thres1[2, 2] <- NA
+thres1[2, 3] <- NA
+
+## Glow.02a (L1, L2, L3 -- no L0)
+thres1[3, 4] <- thres1[3, 3]
+thres1[3, 3] <- thres1[3, 2]
+thres1[3, 2] <- NA
+
+## Powder.05ab (L1, L3, L4)
+thres1[6, 4] <- thres1[6, 2]
+thres1[6, 5] <- thres1[6, 3]
+thres1[6, 2] <- NA
+thres1[6, 3] <- NA
+
+
+# give descriptive col names for thres1
+colnames(thres1) <- c("item", "L1", "L2 ", "L3", "L4")
+
+# get rid of item col for WrightMap 1
+thres1a <- thres1 %>% select(-item)
+
+# set item names for WrightMap1 (x-axis = items)
+itemnames <- thres1$item
+
+#transposing thres1 to tt for WrightMap 2 with thresfolds on x-axis (rather than items)  
+#transposing thres1 to tt for WrightMap 2 with thresfolds on x-axis (rather than items)  
+tt <- thres1 %>%
+  gather(var, value, -item) %>% 
+  spread(item, value) 
+
+dim(tt) # 4 x 9
+
+# subset tt (dropping the first column)
+tt <- tt[(1:4), (2:9)]
+
+# set itemnames2 for x-axis label for WrightMap2
+itemnames2 <- c("L0 vs.L1", "L1 vs.L2", "L2 vs.L3", "L3 vs.L4")
+
+# set colors; note the number before the closing parenthesis
+# is the number of items
+thresholds.colors <- data.frame(
+  l1 = rep( "#D7191C", 8),
+  l2 = rep( "#FDAE61",8),
+  l3 = rep( "#ABDDA4",8),
+  l4 = rep( "#2B83BA",8))
+
+itemcolors <- c("#D7191C", "#FDAE61", "#ABDDA4", "#2B83BA")
+
+```
+
+### 3. Wright Maps
+
+```{r plots, echo=FALSE, results = FALSE, fig.keep = 'all', message = FALSE, warning = FALSE, fig.align = "center"}
+
+#WrightMap1 with items on x-axis
+wrightMap(theta1, thres1a, 
+          label.items = itemnames,
+          main.title   = "Wright Map: MAPm (by item)",
+          label.items.srt = 90,
+          axis.items = "",
+          thr.sym.col.bg = thresholds.colors)
+
+# mean(model1$p.est$`est (d1)`)
+# sd(model1$p.est$`est (d1)`)
+
+# WrightMap 2 with thresfolds on x-axis
+wrightMap(theta1, tt,
+          label.items = itemnames2,
+          main.title   = "Wright Map: MAPm (by thresholds)",
+          thr.sym.col.fg = itemcolors,
+          thr.sym.col.bg = itemcolors,
+          axis.items = "threshold")
+
+```
+
+```{r calib.results, echo=FALSE, results = FALSE}
+n.cases <- length(theta1)
+n.items <- length(thres1$item)
+wle.rel <- model1$rel.coef[[2]]
+eap.rel <- model1$rel.coef[[3]]
+min.Wfit <- min(model1$RMP$item$W.fit)
+max.Wfit <- max(model1$RMP$item$W.fit)
+```
+#####   Calibration stats from calibration
+
+*  `r n.cases` cases
+*  `r n.items` scorable "units"
+*  WLE Separation Reliability: `r wle.rel`
+*  EAP/PV Reliability: `r eap.rel`
+*  Weighted MNSQ range: `r min.Wfit` - `r max.Wfit`
+
+
+### 4. Threshold Difficulty
+
+```{r tables, echo=FALSE, message = FALSE, warning = FALSE}
+
+knitr::kable(thres1, format = "html", digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = TRUE, font_size = 12)
+
+```
+
+
+### 5. Item Analysis
+
+* <a href="https://drive.google.com/open?id=1WZifZWOh17hMDVK8A_cmf1q1no-eLCF-" target = "_blank">Link to Item Analysis </a> (ConQuest output)
